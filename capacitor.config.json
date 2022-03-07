@@ -1,0 +1,22 @@
+{
+	"appId": "au.com.cities",
+	"appName": "MandarinGathering",
+	"webDir": "www",
+	"bundledWebRuntime": false,
+
+"plugins": {
+    "CapacitorFirebaseAuth": {
+      "providers": ["google.com", "twitter.com", "facebook.com", "phone"],
+      "languageCode": "en",
+      "nativeAuth": false,
+      "properties": {
+        "google": {
+            "hostedDomain": "cities.com.au"
+        }
+      },   
+      "permissions": {
+           "google": ["profile", "https://www.googleapis.com/auth/drive"]
+       }
+    }
+  }
+}

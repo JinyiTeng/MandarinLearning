@@ -1,0 +1,30 @@
+[
+	{
+		"pkg": "@capacitor/app",
+		"classpath": "com.capacitorjs.plugins.app.AppPlugin"
+	},
+	{
+		"pkg": "@capacitor/filesystem",
+		"classpath": "com.capacitorjs.plugins.filesystem.FilesystemPlugin"
+	},
+	{
+		"pkg": "@capacitor/storage",
+		"classpath": "com.capacitorjs.plugins.storage.StoragePlugin"
+	},
+	{
+		"pkg": "@robingenz/capacitor-firebase-authentication",
+		"classpath": "dev.robingenz.capacitorjs.plugins.firebase.auth.FirebaseAuthenticationPlugin"
+	},
+	{
+		"pkg": "capacitor-file-picker",
+		"classpath": "com.epicshaggy.filepicker.FilePicker"
+	},
+	{
+		"pkg": "capacitor-firebase-upload-file",
+		"classpath": "com.jdesigner.firebaseuploadfile.plugin.FirebaseUploadFile"
+	},
+	{
+		"pkg": "capacitor-voice-recorder",
+		"classpath": "com.tchvu3.capacitorvoicerecorder.VoiceRecorder"
+	}
+]
