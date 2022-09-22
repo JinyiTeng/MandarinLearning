@@ -1,0 +1,27 @@
+.topic-items {
+  padding: 10px;
+}
+
+.topic-item {
+  background-color: #fff;
+  display: inline-block;
+  white-space: nowrap;
+  box-shadow: 1px 1px 4px 0 #a0a0a0;
+  border-radius: 50px;
+  padding: 3px 8px 3px 22px;
+
+  margin: 8px 8px;
+}
+
+.topic-item:hover {
+  background-color: rgb(4, 102, 4);
+  color: #fff;
+}
+
+.ms-4 {
+  margin-left: 20px;
+}
+
+.me-2 {
+  margin-right: 12px;
+}

@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons class="inner-buttons" slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="item">{{item.Topic}} - {{item.Translate}}</ion-title>
+    <ion-title *ngIf="!item">Word list</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openAddWord()">
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-button>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="main">
+    <div class="list">
+      <div
+        class="listItem flex"
+        *ngFor="let item of wordList;"
+      >
+        <div class="flex-1" (click)="openWordInfo(item)">
+          <div class="zh">{{item.Mandarin}}</div>
+          <div class="en">
+            {{item.Translation ? item.Translation : item.Literal}}
+          </div>
+        </div>
+        <div class="p-2">
+          <ion-button (click)="deleteItem(item)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

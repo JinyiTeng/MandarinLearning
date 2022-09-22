@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons class="inner-buttons" slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Create Word</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="createWordForm" (submit)="createWord()">
+    <div class="topic flex">
+      <div topic-label>Topic</div>
+      <div class="flex-1 topic-value">{{topic}}</div>
+    </div>
+    <ion-item>
+      <ion-label stacked>Translation</ion-label>
+      <ion-input
+        formControlName="translation"
+        type="text"
+        placeholder="Input topic translation?"
+      >
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Mandarin</ion-label>
+      <ion-input formControlName="mandarin" type="text" placeholder="Input mandarin">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Literal</ion-label>
+      <ion-input
+        formControlName="literal"
+        type="text"
+        placeholder="Input topic literal?"
+      >
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Voice Data</ion-label>
+      <span>
+        <ion-button expand="block" (click)="recordStartOrStop()">{{state.isRecording ? 'Recording' : 'Start record'}}</ion-button>
+      </span>
+      <span>{{recordStatusStr}}</span>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" [disabled]="!createWordForm.valid">
+      Add Word
+    </ion-button>
+  </form>
+</ion-content>

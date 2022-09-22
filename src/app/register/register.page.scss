@@ -1,0 +1,67 @@
+.inner-toolbar {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  width: auto !important;
+
+  .toolbar-container {
+    width: auto !important;
+  }
+
+  --background: none !important;
+  --background-color: transparent !important;
+
+  .inner-buttons {
+    color: rgba(255, 255, 255, 0.6);
+    padding: 0 14px 0 6px;
+    margin-left: 12px;
+    border-radius: 100px;
+  }
+}
+
+ion-content {
+    --background: url(../../assets/bg.jpg);
+    --background-size: cover;
+  }
+  
+  .form {
+    margin: 100px auto;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 15px;
+    width: 80%;
+    .tit{
+      margin-top: 10px;
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .name,.psd{
+      margin-bottom: 15px;
+    }
+    .label{
+      width: 80px;
+      font-size: 14px;
+    }
+    input{
+      font-size: 12px;
+      padding-left: 10px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+      height: 32px;
+      line-height: 32px;
+    }
+    .btn {
+      width: 100%;
+      text-align: center;
+      border-radius: 50px;
+      color: #fff;
+      font-size: 14px;
+      line-height: 40px;
+      margin-bottom: 30px;
+      margin-top: 30px;
+      background-image: linear-gradient(45deg, rgba(255, 69, 22, 0.925), #ff9900);
+    }
+  }
+  

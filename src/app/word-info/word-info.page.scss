@@ -1,0 +1,159 @@
+ion-header {
+  display: flex;
+  padding: 10px 0;
+  background-color: #021c40;
+  ion-back-button {
+    color: #fff;
+  }
+  .search {
+    margin-left: 15px;
+    input {
+      border-radius: 5px;
+      border: none;
+      height: 32px;
+      padding: 0 15px;
+      line-height: 32px;
+    }
+  }
+  .btn {
+    color: #fff;
+    line-height: 32px;
+    margin-left: 15px;
+  }
+}
+
+ion-content {
+  --background: rgb(5, 29, 65);
+  --background-size: cover;
+}
+
+.icons {
+  background-color: #222;
+  justify-content: space-around;
+
+  > div {
+    width: 40px;
+    height: 40px;
+
+    svg {
+      display: block;
+      margin: 7.5px auto;
+    }
+  }
+
+  > div.active {
+    background-color: rgb(250, 83, 34);
+  }
+}
+
+.info {
+  height: 300px;
+  width: 100%;
+  position: relative;
+  background-color: #d2dae7;
+  .zh,
+  .en {
+    font-weight: 600;
+    font-size: 22px;
+    // text-align: center;
+    padding: 0 16px;
+  }
+  .zh {
+    padding: 1em 5vw;
+    background-color: #b7c5d8;
+  }
+  .en {
+    font-weight: 400;
+    padding: 1em 5vw;
+    font-size: 1.5em;
+    position: relative;
+    span {
+      position: relative;
+      display: inline-block;
+      z-index: 1;
+    }
+    span.bgc {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.8);
+      z-index: -1;
+    }
+  }
+  .icon {
+    justify-content: space-between;
+
+    .i {
+      background-color: #fff;
+      padding: 5px;
+      border-radius: 50px;
+      img {
+        width: 20px;
+        height: 20px;
+        display: block;
+      }
+      svg {
+        display: block;
+      }
+    }
+    .i.active {
+      background-color: #f00;
+    }
+
+    > div:not(.i) {
+      width: 30%;
+      justify-content: space-around;
+    }
+  }
+
+  > .icon.flex {
+    position: absolute;
+    bottom: 20px;
+    right: 0;
+    left: 0;
+  }
+}
+
+.lr {
+  > div {
+    width: 50%;
+  }
+}
+
+#tit {
+  font-size: 16px;
+  margin: 15px;
+  color: #eee;
+}
+.audioList {
+  color: #fff;
+  padding-left: 16px;
+  > div {
+    margin-bottom: 15px;
+  }
+  .btn {
+    background-color: #496eab;
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 3px;
+  }
+  .prograss {
+    background-color: #4f6280;
+    height: 3px;
+    margin: 0 15px;
+    max-width: 120px;
+    border-radius: 5px;
+    position: relative;
+    span {
+      position: absolute;
+      border-radius: 5px;
+      height: 100%;
+      // width: 100%;
+      left: 0;
+      top: 0;
+      background-color: #fff;
+    }
+  }
+}

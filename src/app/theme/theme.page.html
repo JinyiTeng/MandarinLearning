@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons class="inner-buttons" slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Start learn</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/theme-create">
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="$isLogin" class="topic-items">
+    <ng-container *ngIf="drapdownList && drapdownList.length > 0">
+      <div ngClass="topic-item flex" *ngFor="let item of drapdownList">
+        <span (click)="openWordList(item)">
+          <ion-icon name="bookmarks-outline" class="me-2"></ion-icon>
+          <span>{{item.Translate}}</span>
+        </span>
+        <span class="ms-4" (click)="deleteItem(item)"
+          ><ion-icon name="close-circle-outline"></ion-icon
+        ></span></div
+    ></ng-container>
+  </div>
+  <div *ngIf="!$isLogin" class="no-result">
+    You need <a routerLink="/login">sign in</a>
+  </div>
+</ion-content>

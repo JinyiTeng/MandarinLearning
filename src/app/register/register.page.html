@@ -1,0 +1,30 @@
+
+<ion-content>
+  <ion-toolbar class="inner-toolbar">
+    <ion-buttons class="inner-buttons" slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title></ion-title>
+  </ion-toolbar>
+  
+  <div class="form">
+    <div class="tit">
+      Register
+    </div>
+    <div class="name flex">
+      <div class="label ">Phone Number:</div>
+      <div class=""><input [(ngModel)]="form.account" type="text"></div>
+    </div>
+    <!-- <div class="psd flex">
+      <div class="label ">Password:</div>
+      <div class=""><input type="password" [(ngModel)]="form.password"></div>
+    </div>
+    <div class="psd flex">
+      <div class="label ">Password:</div>
+      <div class=""><input type="password" [(ngModel)]="form.rePassword"></div>
+    </div> -->
+    <div class="btn" (click)="onSubmit()">
+      Register
+    </div>
+  </div>
+</ion-content>

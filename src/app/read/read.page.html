@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>read</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <div>
+      <pre>{{json(state)}}</pre>
+      <button type="button" (click)="modifyOption()">重置配置</button>
+    </div>
+    <hr />
+    <div>
+      <button type="button" (click)="startRecord()">录音开启</button>
+      <button type="button" (click)="pauseRecord()">暂停</button>
+      <button type="button" (click)="resumeRecord()">恢复</button>
+      <button type="button" (click)="endRecord()">录音停止</button>
+    </div>
+    <hr />
+    <div>
+      <div>
+        <span>{{ state.duration }}</span>
+        <label>录音时长(秒)</label>
+      </div>
+      <div>
+        <span>{{ state.fileSize }}</span>
+        <label>录音大小(字节)</label>
+      </div>
+      <div>
+        <span>{{ state.vol }}</span>
+        <label>当前录音音量百分比(%)</label>
+      </div>
+    </div>
+    <div>
+      <span>录音：</span>
+      <canvas id="canvas"></canvas>
+      <span>播放：</span>
+      <canvas id="playChart"></canvas>
+    </div>
+    <hr />
+    <div>
+      <button type="button" (click)="playRecord()">录音播放</button>
+      <button type="button" (click)="pausePlay()">暂停播放</button>
+      <button type="button" (click)="resumePlay()">恢复播放</button>
+      <button type="button" (click)="stopPlay()">停止播放</button>
+      <button type="button" (click)="destroyRecord()">销毁实例</button>
+    </div>
+    <hr />
+    <div>
+      <h3>下载</h3>
+      <button type="button" (click)="downloadPCM()">下载PCM</button>
+      <button type="button" (click)="downloadWAV()">下载WAV</button>
+    </div>
+    <hr />
+    <div [style]="{ position: 'relative' }">
+      <h3 (click)="bbb()">上传</h3>
+      <input
+        type="file"
+        [style]="{
+          position: 'absolute',
+          width: '30px',
+          height: '30px',
+          top: '36px',
+          cursor: 'poniter',
+          left: '0px',
+          opacity: 0
+        }"
+        (change)="uploadAudio($event)"
+      />
+    </div>
+  </div>
+  <audio [src]="file(files)" *ngIf="files !== ''" controls ></audio>
+</ion-content>

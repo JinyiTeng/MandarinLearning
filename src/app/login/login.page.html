@@ -1,0 +1,22 @@
+<ion-content>
+  <ion-toolbar class="inner-toolbar">
+    <ion-buttons class="inner-buttons" slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title></ion-title>
+  </ion-toolbar>
+  
+  <div class="form">
+    <div class="tit"></div>
+    <div class="name flex">
+      <ion-input class="flex-1" [(ngModel)]="form.phone" placeholder="Phone number" type="text"></ion-input>
+    </div>
+    <div class="psd flex">
+      <ion-input class="flex-1" type="text" placeholder="Sms code" [(ngModel)]="form.code"></ion-input>
+      <ion-button class="sms-btn" type="button" (click)="onSendSMS()">Send SMS</ion-button>
+    </div>
+    <div id="signInMessage"></div>
+    <div class="btn" (click)="onSignIn()">Sign in</div>
+    <!--div class="zc" (click)="hrefTo('/register')">Register</div-->
+  </div>
+</ion-content>
