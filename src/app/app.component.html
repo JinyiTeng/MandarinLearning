@@ -40,20 +40,7 @@
             auto-hide="false"
             *ngFor="let item of drapdownList; let i = index"
           >
-            <ion-item
-            *ngIf="item.func"
-              routerDirection="root"
-              (click)="item.func()"
-              lines="none"
-              detail="false"
-              routerLinkActive="selected"
-            >
-              <ion-icon
-                slot="start"
-                [name]="item.icon ? item.icon : 'link-outline'"
-              ></ion-icon>
-              <ion-label>{{ item.title }}</ion-label>
-            </ion-item>
+      
             <ion-item
               *ngIf="item.url"
               routerDirection="root"
