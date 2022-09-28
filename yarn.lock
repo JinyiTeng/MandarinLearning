@@ -4943,6 +4943,11 @@
   "resolved" "https://registry.npmmirror.com/fuzzy/-/fuzzy-0.1.3.tgz"
   "version" "0.1.3"
 
+"g@^2.0.1":
+  "integrity" "sha512-Fi6Ng5fZ/ANLQ15H11hCe+09sgUoNvDEBevVgx3KoYOhsH5iLNPn54hx0jPZ+3oSWr+xajnp2Qau9VmPsc7hTA=="
+  "resolved" "https://registry.npmjs.org/g/-/g-2.0.1.tgz"
+  "version" "2.0.1"
+
 "gauge@^4.0.0":
   "integrity" "sha512-f9m+BEN5jkg6a0fZjleidjN51VE1X+mPFQ2DJ0uv1V39oCLCbsGe6yjbBnp7eK7z/+GAon99a3nHuqbuuthyPg=="
   "resolved" "https://registry.npmmirror.com/gauge/-/gauge-4.0.4.tgz"

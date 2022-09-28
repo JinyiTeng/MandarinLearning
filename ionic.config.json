@@ -1,5 +1,7 @@
 {
   "name": "com.english.learn",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
