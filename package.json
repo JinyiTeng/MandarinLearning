@@ -21,7 +21,6 @@
     "@angular/platform-browser-dynamic": "~13.2.2",
     "@angular/router": "~13.2.2",
     "@angular/service-worker": "~13.2.2",
-
     "@datorama/akita": "^7.1.1",
     "@firebase/database": "^0.12.8",
     "@firebase/storage": "^0.9.5",
