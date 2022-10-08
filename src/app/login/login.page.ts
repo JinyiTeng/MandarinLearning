@@ -15,7 +15,7 @@ import { getAuth, RecaptchaVerifier } from '@angular/fire/auth';
 })
 export class LoginPage extends PageBase implements OnInit {
   form = {
-    phone: '+61450431269',
+    phone: '',
     code: '',
   };
   confirmationResult: any;
