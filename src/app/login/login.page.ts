@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { AppConfig } from '../app.config';
 import { AppNet } from '../app.net';
@@ -24,12 +24,15 @@ export class LoginPage extends PageBase implements OnInit {
     protected appStore: AppStore,
     protected navCtrl: NavController,
     public route: ActivatedRoute,
-    public auth: AngularFireAuth
+    public auth: AngularFireAuth,
+    private router: Router,
   ) {
     super(appStore, navCtrl, route);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
 
   async onSignIn() {
     if (!this.confirmationResult) {
@@ -38,8 +41,8 @@ export class LoginPage extends PageBase implements OnInit {
     }
     let code = this.form.code;
     code = code.replace(/\s+/gi, '');
-    if (code.length < 4) {
-      alert('code input valid value');
+    if (code.length < 6) {
+      alert('Input valid value');
       return;
     }
 
@@ -74,7 +77,7 @@ export class LoginPage extends PageBase implements OnInit {
   async onSendSMS() {
     let phone = this.form.phone;
     phone = phone.replace(/\s+/gi, '');
-    if (phone.length < 4) {
+    if (phone.length < 10) {
       alert('Please input valid value');
       return;
     }
@@ -100,6 +103,7 @@ export class LoginPage extends PageBase implements OnInit {
       this.confirmationResult = null;
       alert(e.toString());
     }
+     
   }
 
   async doLogin(phone, user, credential) {
@@ -116,5 +120,6 @@ export class LoginPage extends PageBase implements OnInit {
 
     this.hrefReplace('/folder/Inbox');
     await this.toast('Successful');
+    this.router.navigateByUrl('/folder', { replaceUrl: true });
   }
 }
