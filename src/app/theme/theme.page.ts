@@ -38,6 +38,7 @@ export class ThemePage extends PageBase implements OnInit {
   }
 
   async getData() {
+    console.log('=============');
     this.loadingWin = await this.loadingCtrl.create({
       message: 'data loading ...',
       showBackdrop: true,
@@ -46,7 +47,7 @@ export class ThemePage extends PageBase implements OnInit {
     this.loadingWin.present();
 
     const db = getFirestore(firebaseApp);
-
+    console.log('---------', db);
     const querySnapshot = await getDocs(collection(db, 'DropDownList'));
     const arr = [];
     querySnapshot.forEach((doc) => {
