@@ -25,12 +25,13 @@ export class AppComponent extends PageBase {
   public appLoginPages = [
     { title: 'Start learn', url: '/theme', icon: 'flower-outline' },
   ];
-  public appNoLoginPages = [
-    { title: 'Sign in', url: '/login', icon: 'log-in-outline' },
+  public appNoLoginPages: any[] = [
+        { title: 'Sign in', url: '/login', icon: 'log-in-outline' },
     { title: 'Register', url: '/register', icon: 'person-add-outline' },
   ];
 
   drapdownList = this.appNoLoginPages;
+  
   constructor(
     protected appStore: AppStore,
     private router: Router,
