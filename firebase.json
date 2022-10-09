@@ -1,6 +1,10 @@
 {
   "hosting": {
+<<<<<<< HEAD
     "public": "wwww",
+=======
+    "public": "www",
+>>>>>>> ceff67a29d24f0f992261e9f8f3aaec28f29ab48
     "ignore": [
       "firebase.json",
       "**/.*",

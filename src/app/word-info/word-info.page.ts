@@ -27,7 +27,6 @@ import {
   setDoc,
   query,
   where,
-  deleteDoc,
 } from '@firebase/firestore';
 import { AppUtil } from '../app.util';
 import { AppConfig } from '../app.config';
@@ -94,10 +93,7 @@ export class WordInfoPage extends PageBase implements OnInit {
     this.loadData();
     // this.componentDidMount();
     this.getList();
-
-    this.doSaveRecord('ddd');
   }
-
   json(v) {
     return JSON.stringify(v, null, ' ');
   }
@@ -391,31 +387,16 @@ export class WordInfoPage extends PageBase implements OnInit {
     const db = getFirestore(firebaseApp);
     const querySnapshot = await getDocs(collection(db, 'audioList'));
     let id = 0;
-    let ids = [];
-    let wordIdPrex = AppConfig.getUid() + '@@';
     querySnapshot.forEach((doc) => {
       let did = Number(doc.id);
-      let wordId = doc.data()?.WordId ?? '';
-      if (wordId.indexOf(wordIdPrex) === 0) {
-        ids.push(did);
-      }
       id = Math.max(id, isNaN(did) ? 0 : did);
     });
-
-    // remove items
-    ids.sort((a, b) => a - b);
-    const remainAmount = 2; // only keep item amount // ids.length - 1;
-    while (ids.length > remainAmount) {
-      const eid = ids.shift();
-      console.log('eid', eid);
-      await deleteDoc(doc(db, 'audioList', '' + eid));
-    }
 
     id++;
     console.log(id, id);
     setDoc(doc(db, 'audioList', '' + id), {
       id: '' + id,
-      WordId: wordIdPrex + this.item.id,
+      WordId: AppConfig.getUid() + '@@' + this.item.id,
       FileUrl: fileUrl,
     }).then(
       () => {

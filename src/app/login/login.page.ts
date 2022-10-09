@@ -32,11 +32,6 @@ export class LoginPage extends PageBase implements OnInit {
   ngOnInit() {}
 
   async onSignIn() {
-    if (this.form.phone == '1234') {
-      this.mockLogin();
-      return;
-    }
-
     if (!this.confirmationResult) {
       alert('Please click send sms');
       return;
@@ -84,11 +79,6 @@ export class LoginPage extends PageBase implements OnInit {
       return;
     }
 
-    if (phone == '1234') {
-      this.mockLogin();
-      return;
-    }
-
     const auth = getAuth();
     const recaptchaVerifier = new RecaptchaVerifier(
       'signInMessage',
@@ -126,9 +116,5 @@ export class LoginPage extends PageBase implements OnInit {
 
     this.hrefReplace('/folder/Inbox');
     await this.toast('Successful');
-  }
-
-  async mockLogin() {
-    this.doLogin('123456789123', { uid: 1234 }, '11111111111111');
   }
 }
