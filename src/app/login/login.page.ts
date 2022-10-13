@@ -35,10 +35,10 @@ export class LoginPage extends PageBase implements OnInit {
   }
 
   async onSignIn() {
-    if (!this.confirmationResult) {
-      alert('Please click send sms');
-      return;
-    }
+    // if (!this.confirmationResult) {
+    //   alert('Please click send sms');
+    //   return;
+    // }
     let code = this.form.code;
     code = code.replace(/\s+/gi, '');
     if (code.length < 6) {
