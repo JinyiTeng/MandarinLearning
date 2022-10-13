@@ -25,13 +25,12 @@ export class AppComponent extends PageBase {
   public appLoginPages = [
     { title: 'Start learn', url: '/theme', icon: 'flower-outline' },
   ];
-  public appNoLoginPages: any[] = [
-        { title: 'Sign in', url: '/login', icon: 'log-in-outline' },
+  public appNoLoginPages = [
+    { title: 'Sign in', url: '/login', icon: 'log-in-outline' },
     { title: 'Register', url: '/register', icon: 'person-add-outline' },
   ];
 
   drapdownList = this.appNoLoginPages;
-  
   constructor(
     protected appStore: AppStore,
     private router: Router,
@@ -86,7 +85,7 @@ export class AppComponent extends PageBase {
     // 0481667345
 
     this.auth
-      .signInWithPhoneNumber('+61450431269', recaptchaVerifier)
+      .signInWithPhoneNumber('', recaptchaVerifier)
       .then(function (confirmationResult) {
         var verificationCode = window.prompt(
           'Please enter the verification ' +

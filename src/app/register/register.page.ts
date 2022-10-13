@@ -34,7 +34,7 @@ export class RegisterPage extends PageBase implements OnInit {
   ngOnInit() { }
 
   async onSubmit() {
-    
+    //fixme
 
     await this.toast('Register success');
     this.hrefReplace('/login');
