@@ -14,7 +14,7 @@
     </div>
     <div class="icon flex">
       <div class="flex">
-        <div class="i">
+        <div class="i" [ngClass]="{'active': inFavoriteStatus}" (click)="onFavoriteAdd(!!inFavoriteStatus)">
           <svg class="icon" width="20px" height="20.00px" viewBox="0 0 1024 1024" version="1.1"
             xmlns="http://www.w3.org/2000/svg">
             <path fill="#333333"

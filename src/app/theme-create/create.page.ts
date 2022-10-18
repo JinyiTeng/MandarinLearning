@@ -19,6 +19,7 @@ import {
 } from '@firebase/firestore';
 import { PageBase } from '../app.page';
 import { AppStore } from '../app.store';
+import { AppConfig } from '../app.config';
 
 //Tab 2 to add new word to database
 @Component({
@@ -37,7 +38,7 @@ export class ThemeCreatePage extends PageBase implements OnInit {
     formBuilder: FormBuilder,
     protected appStore: AppStore,
     protected navCtrl: NavController,
-    public route: ActivatedRoute,
+    public route: ActivatedRoute
   ) {
     super(appStore, navCtrl, route);
 
@@ -46,6 +47,10 @@ export class ThemeCreatePage extends PageBase implements OnInit {
       translate: ['', Validators.required],
     });
   }
+
+  ngOnInit() {
+  }
+
   async createTheme() {
     const loading = await this.loadingCtrl.create();
     /// {"Topic":"运动会","Translate":"sports competition"}
@@ -59,13 +64,13 @@ export class ThemeCreatePage extends PageBase implements OnInit {
     querySnapshot.forEach((doc) => {
       let did = Number(doc.id);
       id = Math.max(id, isNaN(did) ? 0 : did);
-      
     });
 
     id++;
     console.log(id, id);
     setDoc(doc(db, 'DropDownList', '' + id), {
       id: '' + id,
+      uid: this.$sess.uid,
       Topic: topic,
       Translate: translate,
     }).then(
@@ -83,6 +88,4 @@ export class ThemeCreatePage extends PageBase implements OnInit {
 
     return await loading.present();
   }
-
-  ngOnInit() {}
 }

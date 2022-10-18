@@ -20,7 +20,7 @@ export const baseName = (f: string): string => {
 };
 
 export const toStdNameTag = (f: string): string => {
-  f = f.replace(/[`’]+/gi, '');
+  f = (f ?? '').replace(/[`’]+/gi, '');
   const fname = f.replace(/[^a-zA-Z0-9]+/gi, ' ').trim();
   return fname.replace(/\s+/gi, '_').toLowerCase();
 };

@@ -1,4 +1,5 @@
 import * as localforage from 'localforage';
+import { AppStore } from './app.store';
 import { AppUtil } from './app.util';
 
 declare let globalBaseUrl: any;
@@ -46,6 +47,9 @@ class AppConfigBase {
   private static $self: AppConfigBase;
   private $beforLeavePages = [];
   private $memStates: Map<string, any> = new Map();
+  private appStore: AppStore = null;
+
+  constructor() {}
 
   public static getInstance(): AppConfigBase {
     if (AppConfigBase.$self) {
@@ -104,11 +108,21 @@ class AppConfigBase {
     return this.$lang;
   }
 
+  public setAppStore(a: AppStore) {
+    this.appStore = a;
+  }
+
+  public appStoreUpdate(o) {
+    if (this.appStore) {
+      this.appStore.update((state) => o);
+    }
+  }
+
   public async setLang(l) {
     this.$lang = l;
     await this.set('lang', l);
 
-    //AppStore.commit('setLang', this.$lang);
+    this.appStoreUpdate({ lang: this.$lang });
     return this.$lang;
   }
 
@@ -129,12 +143,12 @@ class AppConfigBase {
     const isess = await this.set('session', s);
     this.$session = isess;
 
-    console.log('setSession', this.$session);
+    console.log('setSession', s, this.$session);
 
-    //AppStore.commit('setSession', {
-    //  sess: isess,
-    //  isLogin: this.isLogin(),
-    //});
+    this.appStoreUpdate({
+      sess: this.$session,
+      isLogin: this.isLogin(),
+    });
   }
 
   public isLogin() {

@@ -67,6 +67,8 @@ export class WordInfoPage extends PageBase implements OnInit {
   loadingWin;
   audioList = [];
 
+  inFavoriteStatus = false;
+
   constructor(
     private activeRoute: ActivatedRoute,
     protected appStore: AppStore,
@@ -94,8 +96,6 @@ export class WordInfoPage extends PageBase implements OnInit {
     this.loadData();
     // this.componentDidMount();
     this.getList();
-
-    this.doSaveRecord('ddd');
   }
 
   json(v) {
@@ -146,6 +146,8 @@ export class WordInfoPage extends PageBase implements OnInit {
     if (!this.item) {
       return;
     }
+
+    this.inFavoriteStatus = await this.inFavorite();
 
     if (this.item.FileUrl) {
       this.itemUrl = this.sanitize(this.item.FileUrl);
@@ -352,20 +354,18 @@ export class WordInfoPage extends PageBase implements OnInit {
     const colRef = collection(db, 'audioList');
 
     // Create a query against the collection.
-    const wordId = '' + AppConfig.getUid() + '@@' + this.item.id;
+    const wordId = '' + AppConfig.getUid() + '@@' + (this.item.id ?? '-1');
     console.log('WordId == ', wordId);
     const q = query(colRef, where('WordId', '==', wordId));
 
     const querySnapshot = await getDocs(q);
     const arr = [];
+
     querySnapshot.forEach((doc) => {
       console.log(`${doc.id} => `, JSON.stringify(doc.data()));
       const ditem = doc.data();
       if (!ditem.id) {
-        ditem.id = doc.id;
-      }
-      if (ditem.FileUrl) {
-        ditem.FileUrl = this.sanitize(ditem.FileUrl);
+        ditem.id = doc.id + 1;
       }
       arr.unshift(ditem);
     });
@@ -401,6 +401,7 @@ export class WordInfoPage extends PageBase implements OnInit {
       }
       id = Math.max(id, isNaN(did) ? 0 : did);
     });
+
     // remove items
     ids.sort((a, b) => a - b);
     const remainAmount = 2; // only keep item amount // ids.length - 1;
@@ -476,5 +477,69 @@ export class WordInfoPage extends PageBase implements OnInit {
     } else {
       player.pause();
     }
+  }
+
+  async inFavorite() {
+    if (!this.item) {
+      return false;
+    }
+
+    const uid = '' + AppConfig.getUid();
+    const db = getFirestore(firebaseApp);
+    const dataDoc = await getDoc(doc(db, 'myFavorites', uid));
+
+    let ditem = dataDoc.data();
+    if (!ditem) {
+      ditem = {};
+    }
+    const dataItems = ditem['items'] ? ditem['items'] : {};
+    let arr: any[] = dataItems[this.item.Topic]
+      ? dataItems[this.item.Topic]
+      : [];
+
+    return arr.includes(this.item.id);
+  }
+
+  async onFavoriteAdd(del = false) {
+    if (!this.item) {
+      return;
+    }
+
+    this.loadingWin = await this.loadingCtrl.create({
+      message: 'save data ...',
+      showBackdrop: true,
+      duration: 120000,
+    });
+    this.loadingWin.present();
+
+    const uid = '' + AppConfig.getUid();
+    const db = getFirestore(firebaseApp);
+    const dataDoc = await getDoc(doc(db, 'myFavorites', uid));
+
+    let ditem = dataDoc.data();
+    if (!ditem) {
+      ditem = {};
+    }
+    const dataItems = ditem['items'] ? ditem['items'] : {};
+    let arr: any[] = dataItems[this.item.Topic]
+      ? dataItems[this.item.Topic]
+      : [];
+
+    if (del) {
+      arr = arr.filter((v) => v != this.item.id);
+    } else {
+      if (!arr.includes(this.item.id)) {
+        arr.push(this.item.id);
+      }
+    }
+
+    dataItems[this.item.Topic] = arr;
+    setDoc(doc(db, 'myFavorites', uid), {
+      uid: uid,
+      items: dataItems,
+    });
+
+    this.inFavoriteStatus = !del;
+    this.loadingWin.dismiss();
   }
 }

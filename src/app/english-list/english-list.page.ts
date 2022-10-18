@@ -7,6 +7,7 @@ import {
   doc,
   deleteDoc,
   query,
+  setDoc,
   where,
 } from '@firebase/firestore';
 import { LoadingController, NavController } from '@ionic/angular';
@@ -22,6 +23,9 @@ import { AppStore } from '../app.store';
 export class EnglishListPage extends PageBase implements OnInit {
   wordList = [];
   item: any;
+  favorite = false;
+  fvArr: any[];
+
   loadingWin: any;
   loadingWin1: any;
   drapdownList = [];
@@ -38,6 +42,8 @@ export class EnglishListPage extends PageBase implements OnInit {
 
   ngOnInit() {
     this.item = this.activeRoute.snapshot.params;
+    this.favorite = !!this.item['favorite'];
+    this.fvArr = (this.item['fvStr'] ?? '-1').split(',');
     console.log(this.item);
   }
 
@@ -61,28 +67,39 @@ export class EnglishListPage extends PageBase implements OnInit {
     const docsRef = collection(db, 'wordList');
 
     // Create a query against the collection.
-    const q = query(docsRef, where('Topic', '==', this.item.Topic));
+    let wh = where('Topic', '==', this.item.Topic);
+    if (this.favorite) {
+      let arr = this.fvArr;
+      if (!arr) {
+        arr = ['-1'];
+      }
+      wh = where('id', 'in', arr);
+    }
+    console.log('wh', wh);
+    const q = query(docsRef, wh);
 
     const querySnapshot = await getDocs(q);
     const arr = [];
+    const docFunc = doc;
     querySnapshot.forEach((doc) => {
       // console.log(`${doc.id} => `, JSON.stringify(doc.data()));
       const ditem = doc.data();
       if (!ditem.id) {
-        ditem.id = doc.id;
+        ditem.id = doc.id + 1;
       }
       arr.push(ditem);
     });
     this.wordList = arr;
 
+
     this.loadingWin.dismiss();
   }
 
   openWordInfo(v: any) {
-    this.router.navigate(['/word-info', v]);
-  }
-  openWordList(v: any) {
-    this.router.navigate(['/english-list', v]);
+    this.navCtrl.navigateForward([
+      '/word-info',
+      { ...v, favorite: this.favorite ? 1 : '' },
+    ]);
   }
 
   openAddWord() {

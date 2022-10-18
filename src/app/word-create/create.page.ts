@@ -22,6 +22,7 @@ import { AppStore } from '../app.store';
 import Recorder from 'js-audio-recorder';
 import Player from '../utils/player/player';
 import { encodeWAV } from '../utils/transform/transform';
+import { AppConfig } from '../app.config';
 
 let recorder = null;
 let playTimer = null;
@@ -58,8 +59,8 @@ export class WordCreatePage extends PageBase implements OnInit {
   recordStatusStr = 'none';
   fileUrlData = '';
 
-
   constructor(
+  private activeRoute: ActivatedRoute,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
     formBuilder: FormBuilder,
@@ -77,9 +78,8 @@ export class WordCreatePage extends PageBase implements OnInit {
   }
 
   ngOnInit() {
-    this.item = this.route.snapshot.params;
+    this.item = this.activeRoute.snapshot.params;
     this.topic = this.item ? this.item.Topic : '';
-    console.log('item', this.item);
   }
 
   async createWord() {
@@ -101,6 +101,7 @@ export class WordCreatePage extends PageBase implements OnInit {
     console.log(id, id);
     setDoc(doc(db, 'wordList', '' + id), {
       id: '' + id,
+      uid: this.$sess.uid,
       Topic: this.topic,
       Translation: translation,
       Mandarin: mandarin,
@@ -249,7 +250,7 @@ export class WordCreatePage extends PageBase implements OnInit {
   }
 
   recordStartOrStop() {
-    if(this.state.isRecording) {
+    if (this.state.isRecording) {
       this.endRecord();
     } else {
       this.startRecord();
@@ -267,5 +268,4 @@ export class WordCreatePage extends PageBase implements OnInit {
     };
     a.readAsDataURL(wavBlob);
   }
-
 }

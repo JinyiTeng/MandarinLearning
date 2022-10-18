@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LoadingController, NavController } from '@ionic/angular';
 import {
@@ -21,16 +21,33 @@ import { getAuth, RecaptchaVerifier } from '@angular/fire/auth';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent extends PageBase {
+export class AppComponent extends PageBase implements OnDestroy {
   public appLoginPages = [
     { title: 'Start learn', url: '/theme', icon: 'flower-outline' },
+    {
+      title: 'My favorite',
+      func: () => {
+        console.log('++++++++')
+        this.navCtrl.navigateForward(['/theme', { favorite: true }]);
+      },
+      icon: 'flower-outline',
+    },
   ];
-  public appNoLoginPages = [
+  public appNoLoginPages: any[] = [
     { title: 'Sign in', url: '/login', icon: 'log-in-outline' },
-    { title: 'Register', url: '/register', icon: 'person-add-outline' },
+    /*
+    {
+      title: 'Test sign in',
+      func: () => {
+        this.onTestSignIn();
+      },
+      icon: 'person-add-outline',
+    },
+    */
   ];
 
   drapdownList = this.appNoLoginPages;
+
   constructor(
     protected appStore: AppStore,
     private router: Router,
@@ -44,6 +61,8 @@ export class AppComponent extends PageBase {
   }
 
   ngOnInit() {
+    AppConfig.setAppStore(this.appStore);
+
     this.getMenu();
 
     // init global state
@@ -53,6 +72,10 @@ export class AppComponent extends PageBase {
       lang: AppConfig.$lang,
       debug: AppConfig.isDebug(),
     }));
+  }
+
+  ngOnDestroy(): void {
+    AppConfig.setAppStore(null);
   }
 
   async getMenu() {}
@@ -85,7 +108,7 @@ export class AppComponent extends PageBase {
     // 0481667345
 
     this.auth
-      .signInWithPhoneNumber('', recaptchaVerifier)
+      .signInWithPhoneNumber('+61450431269', recaptchaVerifier)
       .then(function (confirmationResult) {
         var verificationCode = window.prompt(
           'Please enter the verification ' +
@@ -106,5 +129,15 @@ export class AppComponent extends PageBase {
     }));
     AppConfig.setSession(null);
     console.log(this.$sess);
+
+    this.hrefReplace('/login');
+  }
+
+  async onTestSignIn() {
+    const user = { uid: 1234 };
+    await AppConfig.setSession(user);
+    await AppConfig.setSessToken({ token: '1234567' });
+
+    this.hrefReplace('/folder/Inbox');
   }
 }

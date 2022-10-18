@@ -4,11 +4,16 @@ import {
   getFirestore,
   getDocs,
   collection,
+  getDoc,
+  setDoc,
+  where,
+  query,
   doc,
   deleteDoc,
 } from '@firebase/firestore';
 import { LoadingController, NavController } from '@ionic/angular';
 import { firebaseApp } from 'src/config/firebase';
+import { AppConfig } from '../app.config';
 import { PageBase } from '../app.page';
 import { AppStore } from '../app.store';
 
@@ -21,25 +26,30 @@ export class ThemePage extends PageBase implements OnInit {
   drapdownList = [];
   loadingWin: any;
 
+  favorite = false;
+  myFavoriteSett: any;
+
   constructor(
     private router: Router,
     protected loadingCtrl: LoadingController,
     protected appStore: AppStore,
     protected navCtrl: NavController,
+    private activeRoute: ActivatedRoute,
     public route: ActivatedRoute
   ) {
     super(appStore, navCtrl, route);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.favorite = !!this.activeRoute.snapshot.params['favorite'];
+  }
 
   ionViewWillEnter() {
     this.getData();
   }
 
   async getData() {
-      console.log('---------');
-
+    console.log('=============');
     this.loadingWin = await this.loadingCtrl.create({
       message: 'data loading ...',
       showBackdrop: true,
@@ -49,14 +59,26 @@ export class ThemePage extends PageBase implements OnInit {
 
     const db = getFirestore(firebaseApp);
     console.log('---------', db);
+    const docRef = collection(db, 'DropDownList');
+    let qr: any = docRef;
+    if (this.favorite) {
+      await this.getFavorite();
+      console.log('this.myFavoriteSett', this.myFavoriteSett);
 
-    const querySnapshot = await getDocs(collection(db, 'DropDownList'));
+      let arr = Object.keys(this.myFavoriteSett);
+      if (!arr || arr.length < 1) {
+        arr = ['-1'];
+      }
+      qr = query(docRef, where('Topic', 'in', arr));
+    }
+
+    const querySnapshot = await getDocs(qr);
     const arr = [];
     querySnapshot.forEach((doc) => {
-      // console.log(`${doc.id} => ${doc.data()}`, JSON.stringify(doc.data()));
-      const ditem = doc.data();
+      console.log(`${doc.id} => ${doc.data()}`, JSON.stringify(doc.data()));
+      const ditem: any = doc.data();
       if (!ditem.id) {
-        ditem.id = doc.id;
+        ditem.id = doc.id + 1;
       }
       arr.push(ditem);
     });
@@ -77,8 +99,16 @@ export class ThemePage extends PageBase implements OnInit {
   */
   }
 
-  openWordList(v: any) {
-    this.router.navigate(['/english-list', v]);
+  async openWordList(v: any) {
+    const fv = await this.getFavorite();
+    console.log(fv);
+
+    const arr = fv ? (fv[v.Topic] ?? []) : [];
+    const fvStr = arr.join(',');
+    this.navCtrl.navigateForward([
+      '/english-list',
+      { ...v, fvStr: fvStr, favorite: this.favorite ? 1 : '' },
+    ]);
   }
 
   deleteItem(item) {
@@ -96,5 +126,17 @@ export class ThemePage extends PageBase implements OnInit {
         }
       );
     });
+  }
+
+  async getFavorite() {
+    if (this.myFavoriteSett) {
+      return this.myFavoriteSett;
+    }
+    const db = getFirestore(firebaseApp);
+    const dataDoc = await getDoc(doc(db, 'myFavorites', this.$sess.uid));
+
+    let ditem = dataDoc.data();
+    console.log(this.$sess.uid, JSON.stringify(ditem));
+    this.myFavoriteSett = ditem ? this.copy(ditem['items']) : {};
   }
 }

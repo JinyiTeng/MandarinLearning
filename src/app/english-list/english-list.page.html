@@ -3,8 +3,11 @@
     <ion-buttons class="inner-buttons" slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title *ngIf="item">{{item.Topic}} - {{item.Translate}}</ion-title>
-    <ion-title *ngIf="!item">Word list</ion-title>
+    <ion-title *ngIf="favorite">My favorite</ion-title>
+    <ng-container *ngIf="!favorite">
+      <ion-title *ngIf="item">{{item.Topic}} - {{item.Translate}}</ion-title>
+      <ion-title *ngIf="!item">Word list</ion-title>
+    </ng-container>
     <ion-buttons slot="end">
       <ion-button (click)="openAddWord()">
         <ion-icon name="add-outline"></ion-icon>
@@ -17,17 +20,14 @@
 <ion-content>
   <div class="main">
     <div class="list">
-      <div
-        class="listItem flex"
-        *ngFor="let item of wordList;"
-      >
+      <div class="listItem flex" *ngFor="let item of wordList;">
         <div class="flex-1" (click)="openWordInfo(item)">
           <div class="zh">{{item.Mandarin}}</div>
           <div class="en">
             {{item.Translation ? item.Translation : item.Literal}}
           </div>
         </div>
-        <div class="p-2">
+        <div class="p-2" *ngIf="item.uid == $sess.uid">
           <ion-button (click)="deleteItem(item)">
             <ion-icon name="trash-outline"></ion-icon>
           </ion-button>

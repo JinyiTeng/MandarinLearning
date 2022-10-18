@@ -3,7 +3,8 @@
     <ion-buttons class="inner-buttons" slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>Start learn</ion-title>
+    <ion-title *ngIf="favorite">My favorite</ion-title>
+    <ion-title *ngIf="!favorite">Start learn</ion-title>
     <ion-buttons slot="end">
       <ion-button routerLink="/theme-create">
         <ion-icon name="add-outline"></ion-icon>

@@ -6,6 +6,11 @@ import { AppConfig } from './app/app.config';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
+import * as firebaseui from 'firebaseui';
+import './../node_modules/firebaseui/dist/firebaseui.css';
+
+(window as any).firebaseui = firebaseui;
+
 (async () => {
   // const vConsole = new VConsole();
   // or init with options
