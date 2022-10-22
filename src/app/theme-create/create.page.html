@@ -3,7 +3,7 @@
     <ion-buttons class="inner-buttons" slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>Create theme</ion-title>
+    <ion-title>Create New Topic</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,16 +11,16 @@
 
   <form [formGroup]="createWordForm" (submit)="createTheme()">
     <ion-item>
-      <ion-label stacked>Topic</ion-label>
+      <ion-label stacked>Mandarin</ion-label>
       <ion-input formControlName="topic" type="text" placeholder="Input topic"> </ion-input>
     </ion-item>
     <ion-item>
-      <ion-label stacked>Translate</ion-label>
+      <ion-label stacked>Topic</ion-label>
       <ion-input formControlName="translate" type="text" placeholder="Input topic translate?">
       </ion-input>
     </ion-item>
 
 
-    <ion-button expand="block" type="submit" [disabled]="!createWordForm.valid"> Add Theme </ion-button>
+    <ion-button expand="block" type="submit" [disabled]="!createWordForm.valid"> Add Topic</ion-button>
   </form>
 </ion-content>
