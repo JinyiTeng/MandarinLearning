@@ -26,6 +26,7 @@ function getUiConfig() {
     signInOptions: [
       {
         provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+        defaultCountry: 'AU',
         recaptchaParameters: {
           size: 'invisible',
         },

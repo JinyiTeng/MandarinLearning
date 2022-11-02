@@ -58,15 +58,15 @@ export class ThemePage extends PageBase implements OnInit {
     this.loadingWin.present();
 
     const db = getFirestore(firebaseApp);
+    
     console.log('---------', db);
     const docRef = collection(db, 'DropDownList');
     let qr: any = docRef;
-    if (this.favorite) {
+    if (this.favorite && this.$isLogin) {
       await this.getFavorite();
       console.log('this.myFavoriteSett', this.myFavoriteSett);
 
-      let arr = Object.keys(this.myFavoriteSett);
-      if (!arr || arr.length < 1) {
+      let arr = this.myFavoriteSett ? Object.keys(this.myFavoriteSett) : [];      if (!arr || arr.length < 1) {
         arr = ['-1'];
       }
       qr = query(docRef, where('Topic', 'in', arr));
@@ -100,10 +100,13 @@ export class ThemePage extends PageBase implements OnInit {
   }
 
   async openWordList(v: any) {
-    const fv = await this.getFavorite();
+    let fv = [];
+    if (this.favorite && this.$isLogin) {
+      fv = await this.getFavorite();
+    }
     console.log(fv);
 
-    const arr = fv ? (fv[v.Topic] ?? []) : [];
+    const arr = fv ? fv[v.Topic] ?? [] : [];
     const fvStr = arr.join(',');
     this.navCtrl.navigateForward([
       '/english-list',
@@ -132,11 +135,18 @@ export class ThemePage extends PageBase implements OnInit {
     if (this.myFavoriteSett) {
       return this.myFavoriteSett;
     }
-    const db = getFirestore(firebaseApp);
-    const dataDoc = await getDoc(doc(db, 'myFavorites', this.$sess.uid));
 
-    let ditem = dataDoc.data();
-    console.log(this.$sess.uid, JSON.stringify(ditem));
-    this.myFavoriteSett = ditem ? this.copy(ditem['items']) : {};
+       try {
+      const db = getFirestore(firebaseApp);
+      const dataDoc = await getDoc(doc(db, 'myFavorites', this.$sess.uid));
+      if (!dataDoc) {
+        return;
+      }
+      let ditem = dataDoc.data();
+      console.log('++',this.$sess.uid, JSON.stringify(ditem));
+      this.myFavoriteSett = ditem ? this.copy(ditem['items']) : {};
+    } catch (e) {
+      console.log(e);
+    }
   }
 }

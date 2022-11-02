@@ -29,8 +29,8 @@ export class LoginPage extends PageBase implements OnInit {
   ) {
     super(appStore, navCtrl, route);
   }
-
-  ngOnInit() {}
+  ngOnInit(){}
+ 
 
   ionViewWillEnter() {
     firebaseUIInit('#loginContainer', this);
@@ -143,6 +143,6 @@ export class LoginPage extends PageBase implements OnInit {
   }
 
   async mockLogin() {
-    this.doLogin('123456789123', { uid: 1234 }, '11111111111111');
+    this.doLogin('123456789123', { uid: '1234' }, '11111111111111');
   }
 }

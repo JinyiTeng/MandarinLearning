@@ -14,8 +14,8 @@ import './../node_modules/firebaseui/dist/firebaseui.css';
 (async () => {
   // const vConsole = new VConsole();
   // or init with options
-  // const vConsole = new VConsole({ maxLogNumber: 1000 });
-
+  //const vConsole = new VConsole({ maxLogNumber: 1000 });
+  
   if (environment.production) {
     enableProdMode();
   }

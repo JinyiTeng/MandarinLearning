@@ -287,7 +287,7 @@ export class WordInfoPage extends PageBase implements OnInit {
     );
   }
 
-  // 暂停
+  // stop
   pauseRecord() {
     if (recorder) {
       recorder.pause();
@@ -296,15 +296,20 @@ export class WordInfoPage extends PageBase implements OnInit {
       drawRecordId = null;
     }
   }
-  //录音停止
-  endRecord() {
+  //stop recording
+  async endRecord() {
     recorder && recorder.stop();
-    console.log('结束录音');
+    
     drawRecordId && cancelAnimationFrame(drawRecordId);
     drawRecordId = null;
-    this.clearPlay();
     this.state.isRecording = false;
-    this.saveRecord();
+    console.log('end recording');
+
+    await this.saveRecord();
+    console.log('保存完成');
+
+    this.clearPlay();
+   
   }
 
   playRecord() {
@@ -362,10 +367,16 @@ export class WordInfoPage extends PageBase implements OnInit {
     const arr = [];
 
     querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => `, JSON.stringify(doc.data()));
+      console.log(
+        `${doc.id} => `,
+        AppUtil.xstrMid(JSON.stringify(doc.data()), 80, 40)
+      );
       const ditem = doc.data();
       if (!ditem.id) {
         ditem.id = doc.id + 1;
+      }
+      if (ditem.FileUrl) {
+        ditem.FileUrl = this.sanitize(ditem.FileUrl);
       }
       arr.unshift(ditem);
     });
@@ -374,15 +385,21 @@ export class WordInfoPage extends PageBase implements OnInit {
     this.loadingWin.dismiss();
   }
 
-  saveRecord() {
-    const wavBlob = recorder.getWAVBlob();
-    const a = new FileReader();
-    a.onload = (e) => {
-      if (e.target.result) {
-        this.doSaveRecord(e.target.result.toString());
-      }
-    };
-    a.readAsDataURL(wavBlob);
+  saveRecord(): Promise<any> {
+    return new Promise<any>((rel, rej) => {
+      const wavBlob = recorder.getWAVBlob();
+      const a = new FileReader();
+      a.onload = async (e) => {
+        if (e.target.result) {
+          const str = e.target.result.toString();
+          await this.doSaveRecord(str);
+          console.log(str.length, AppUtil.xstrMid(str, 15, 10));
+        }
+        rel(true);
+      };
+      a.readAsDataURL(wavBlob);
+    });
+
   }
 
   async doSaveRecord(fileUrl: string) {

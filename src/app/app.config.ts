@@ -9,8 +9,8 @@ declare let GlobalOpenCDN: any;
 class AppConfigBase {
   /********** base var **********/
   public $debug = true;
-  public $projectVersion = 100;
-  public $projectVersionCode = '0.1.0';
+  public $projectVersion = 101;
+  public $projectVersionCode = '0.1.1';
   public $bundleId = 'com.calendar';
   public $useMao = true;
   public $tokenName = 'SSE';
@@ -138,6 +138,10 @@ class AppConfigBase {
   public async setSession(s) {
     if (!this.canStorage()) {
       return;
+    }
+
+    if (s) {
+      s[this.$sessUserID] = '' + s[this.$sessUserID];
     }
 
     const isess = await this.set('session', s);
